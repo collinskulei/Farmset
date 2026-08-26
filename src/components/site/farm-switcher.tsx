@@ -22,6 +22,7 @@ export function FarmSwitcher() {
         render={
           <Button
             variant="outline"
+            data-tour="farm-switcher"
             className="gold-line max-w-[11rem] justify-between gap-2 border-pasture-200 sm:max-w-none"
           />
         }

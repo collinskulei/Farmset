@@ -12,6 +12,7 @@ export function BottomNav() {
 
   return (
     <nav
+      data-tour="tour-nav-mobile"
       className="fixed inset-x-0 bottom-0 z-40 border-t border-pasture-100 bg-background/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden"
       aria-label="Primary"
     >

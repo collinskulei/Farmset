@@ -2,12 +2,20 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Sprout } from "lucide-react";
+import { Compass, Menu, Sprout } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NAV_ITEMS } from "@/components/site/nav-items";
 import { FarmSwitcher } from "@/components/site/farm-switcher";
+import { useTour } from "@/components/site/tour-context";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Separator } from "@/components/ui/separator";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   Sheet,
   SheetContent,
@@ -21,6 +29,7 @@ import { demoNotifications, demoProfile } from "@/lib/demo-data";
 export function Header() {
   const pathname = usePathname();
   const unread = demoNotifications.filter((n) => !n.read).length;
+  const tour = useTour();
 
   return (
     <header className="sticky top-0 z-40 border-b border-pasture-100 bg-background/95 backdrop-blur">
@@ -32,7 +41,10 @@ export function Header() {
           <span className="hidden sm:inline">FarmSet</span>
         </Link>
 
-        <nav className="hidden flex-1 items-center justify-center gap-1 md:flex">
+        <nav
+          data-tour="tour-nav-desktop"
+          className="hidden flex-1 items-center justify-center gap-1 md:flex"
+        >
           {NAV_ITEMS.map((item) => {
             const active =
               item.href === "/dashboard"
@@ -64,11 +76,23 @@ export function Header() {
           <div className="hidden sm:block">
             <FarmSwitcher />
           </div>
-          <Avatar className="size-8 border border-pasture-200">
-            <AvatarFallback className="bg-pasture-100 text-xs font-semibold text-pasture-800">
-              {demoProfile.avatarInitials}
-            </AvatarFallback>
-          </Avatar>
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              render={<button type="button" aria-label="Account menu" />}
+            >
+              <Avatar className="size-8 border border-pasture-200">
+                <AvatarFallback className="bg-pasture-100 text-xs font-semibold text-pasture-800">
+                  {demoProfile.avatarInitials}
+                </AvatarFallback>
+              </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuItem onClick={tour.start} className="gap-2">
+                <Compass className="size-4 text-harvest-600" aria-hidden="true" />
+                Guide me
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           <Sheet>
             <SheetTrigger
@@ -116,6 +140,16 @@ export function Header() {
                     </SheetClose>
                   );
                 })}
+                <Separator className="my-2" />
+                <SheetClose
+                  nativeButton={false}
+                  render={<button type="button" onClick={tour.start} />}
+                >
+                  <span className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-pasture-700">
+                    <Compass className="size-4.5" aria-hidden="true" />
+                    Guide me
+                  </span>
+                </SheetClose>
               </div>
             </SheetContent>
           </Sheet>

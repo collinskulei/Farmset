@@ -146,6 +146,7 @@ export default function DashboardPage() {
           <Button
             className="btn-metallic gold-line font-semibold"
             nativeButton={false}
+            data-tour="tour-log-activity"
             render={<Link href="/dashboard/log" />}
           >
             <ClipboardList className="size-4" aria-hidden="true" />
@@ -156,7 +157,7 @@ export default function DashboardPage() {
 
       <Container className="flex flex-col gap-8 py-8">
         <AnimatedSection>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div data-tour="tour-stats" className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <StatTile
               label="Sick / flagged"
               value={sickAnimals.length}
@@ -193,7 +194,7 @@ export default function DashboardPage() {
         ) : null}
 
         <AnimatedSection delay={0.08}>
-          <div className="grid gap-4 sm:grid-cols-3">
+          <div data-tour="tour-analytics" className="grid gap-4 sm:grid-cols-3">
             <Card className="gap-4 border-pasture-100 p-5 sm:col-span-2">
               <h2 className="font-heading text-lg font-semibold text-pasture-950">
                 Milk yield — last 7 days
