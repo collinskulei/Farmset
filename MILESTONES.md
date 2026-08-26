@@ -8,6 +8,8 @@
 
 > Design reference: [`DESIGN-SYSTEM.md`](./DESIGN-SYSTEM.md) — adapted from the client-provided reference system, with palette swapped to pasture green (structural) + harvest amber (accent).
 
+> UX decision: the root URL (`/`) is the login form directly — no separate marketing landing page. This is a working tool, not a product to sell on first load.
+
 ---
 
 ## M0 — Project Setup
@@ -50,7 +52,7 @@
 ## M5 — Owner Dashboard & Analytics
 - [x] Daily summary view: sick/flagged animals, milk totals, jobs done vs. pending — the "what happened while I was away" view
 - [x] Multi-farm rollup view (per-farm cards + farm switcher to drill into one)
-- [ ] Simple charts (milk yield trend, task completion over time) — stat tiles built, chart visuals not yet added
+- [x] Simple charts: 7-day milk yield bar chart + task-completion meter
 - [x] Recent activity feed (who logged what, when) per farm
 
 ## M6 — Notifications

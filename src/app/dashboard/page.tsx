@@ -13,6 +13,8 @@ import { useFarmContext } from "@/components/site/farm-context";
 import { AppPageHeader } from "@/components/site/app-page-header";
 import { Container } from "@/components/site/container";
 import { AnimatedSection } from "@/components/site/animated-section";
+import { MilkTrendChart } from "@/components/site/milk-trend-chart";
+import { TaskMeter } from "@/components/site/task-meter";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -23,6 +25,25 @@ import {
   demoNotifications,
   demoTasks,
 } from "@/lib/demo-data";
+
+const TODAY = "2026-08-26";
+
+function lastSevenDaysMilk(scopeFarmIds: string[]) {
+  const today = new Date(`${TODAY}T00:00:00`);
+  return Array.from({ length: 7 }).map((_, i) => {
+    const d = new Date(today);
+    d.setDate(d.getDate() - (6 - i));
+    const dateStr = d.toISOString().slice(0, 10);
+    const value = demoMilkLogs
+      .filter((m) => scopeFarmIds.includes(m.farmId) && m.loggedAt.startsWith(dateStr))
+      .reduce((sum, m) => sum + m.litres, 0);
+    return {
+      label: d.toLocaleDateString("en-GB", { weekday: "short" }).slice(0, 3),
+      value,
+      isToday: dateStr === TODAY,
+    };
+  });
+}
 
 function StatTile({
   label,
@@ -65,6 +86,7 @@ export default function DashboardPage() {
   const milkTotal = demoMilkLogs
     .filter((m) => scopeFarmIds.includes(m.farmId))
     .reduce((sum, m) => sum + m.litres, 0);
+  const milkTrend = lastSevenDaysMilk(scopeFarmIds);
 
   type ActivityItem = {
     id: string;
@@ -169,6 +191,23 @@ export default function DashboardPage() {
             </Card>
           </AnimatedSection>
         ) : null}
+
+        <AnimatedSection delay={0.08}>
+          <div className="grid gap-4 sm:grid-cols-3">
+            <Card className="gap-4 border-pasture-100 p-5 sm:col-span-2">
+              <h2 className="font-heading text-lg font-semibold text-pasture-950">
+                Milk yield — last 7 days
+              </h2>
+              <MilkTrendChart data={milkTrend} />
+            </Card>
+            <Card className="justify-center gap-4 border-pasture-100 p-5">
+              <h2 className="font-heading text-lg font-semibold text-pasture-950">
+                Tasks this week
+              </h2>
+              <TaskMeter done={doneTasks.length} total={tasks.length} />
+            </Card>
+          </div>
+        </AnimatedSection>
 
         {selectedFarmId === "all" ? (
           <AnimatedSection delay={0.1}>
