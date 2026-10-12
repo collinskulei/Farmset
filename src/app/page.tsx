@@ -23,11 +23,14 @@ export default function LoginPage() {
   return (
     <div className="flex flex-1 flex-col bg-pasture-50">
       <Container className="flex flex-1 flex-col items-center justify-center py-12">
-        <div className="mb-8 flex items-center gap-2 font-heading text-xl font-semibold text-pasture-950">
-          <span className="flex size-9 items-center justify-center rounded-lg bg-pasture-600 text-white">
-            <Sprout className="size-5" aria-hidden="true" />
-          </span>
-          FarmSet
+        <div className="mb-8 flex flex-col items-center gap-1">
+          <div className="flex items-center gap-2 font-heading text-xl font-semibold text-pasture-950">
+            <span className="flex size-9 items-center justify-center rounded-lg bg-pasture-600 text-white">
+              <Sprout className="size-5" aria-hidden="true" />
+            </span>
+            FarmSet
+          </div>
+          <p className="text-xs text-pasture-600">Provided by Muse Set Farm Services</p>
         </div>
 
         <Card className="w-full max-w-sm gap-5 border-pasture-100 p-6 sm:p-8">

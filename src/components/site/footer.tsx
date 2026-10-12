@@ -37,7 +37,7 @@ export function Footer() {
       </Container>
       <div className="border-t border-pasture-800 py-4">
         <p className="text-center text-xs text-pasture-400">
-          © 2026 FarmSet. All rights reserved.
+          © 2026 Muse Set Farm Services. FarmSet is a product of Muse Set Farm Services. All rights reserved.
         </p>
       </div>
     </footer>

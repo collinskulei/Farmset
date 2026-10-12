@@ -20,7 +20,7 @@ const playfairDisplay = Playfair_Display({
 export const metadata: Metadata = {
   title: "FarmSet — Dairy Farm Management",
   description:
-    "Walk away from your farm without losing touch with it. FarmSet keeps owners, managers and herds connected — from anywhere.",
+    "Walk away from your farm without losing touch with it. FarmSet, provided by Muse Set Farm Services, keeps owners, managers and herds connected — from anywhere.",
 };
 
 export const viewport: Viewport = {

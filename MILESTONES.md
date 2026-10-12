@@ -2,7 +2,9 @@
 
 **Product:** FarmSet — dairy farm management web app (mobile-friendly, installable/PWA-style)
 **Value proposition:** *"Walk away from your farm without losing touch with it."*
-**Client:** Dominic Njoka (Medtulek International) — Kiambu / Upperhill
+**Client:** Dominic Njoka — **Muse Set Farm Services** (registered company). FarmSet is the product: *"FarmSet, provided by Muse Set Farm Services."* The company gets its own separate website later.
+**Pilot decision (12 Oct 2026):** one farm first, invite-only (no public sign-up). Schema stays multi-tenant so other farms can be opened after the pilot without a rebuild.
+**Scope blueprint (mind map + workflows):** https://claude.ai/artifact/A65r3FMGMAKugpTA9Vdbug
 **Goal of this phase:** interactive prototype for client review → quotation. Target rollout: before December 2026.
 **Stack:** Supabase (DB, Auth, Storage, Realtime) + Vercel (hosting/deploy)
 
@@ -74,8 +76,59 @@
 2. **Supabase**: create a project, run `supabase/schema.sql` in the SQL editor, then copy the project URL + anon key into Vercel's env vars (and a local `.env.local`, see `.env.local.example`). Until this is done, the app runs on the built-in demo data — fully clickable, nothing persists.
 3. Once live, wire up real auth on `/login` and connect the logging forms in `/dashboard/log` to actually write to Supabase (M2/M4 remaining items above).
 
+---
+
+# Pilot build — next milestones (from scope review, 12 Oct 2026)
+
+Week estimates count from scope sign-off. Target: farm pilot running before December 2026.
+
+## M8 — Scope Sign-off (Week 1)
+- [ ] Walk Dominic through the scope blueprint (mind map + workflows)
+- [ ] Get answers to open questions: pilot farm name/herd size/staff count; do workers have own phones; farm connectivity; milk per cow vs herd total; English/Swahili; in-app vs SMS alerts; track treatment costs from day one?
+- [x] Update branding in-app: "FarmSet — provided by Muse Set Farm Services" (login page, footer copyright, page metadata)
+- [ ] Add Farm Worker screens ("Today's jobs") + task assignment to the clickable prototype for staff to try
+
+## M9 — Live Foundation (Weeks 1–2)
+- [ ] Schema v2: `worker` role in a single `farm_members(role)` table; `tasks` with `assigned_to`, `due_at`, `status`, `recurring`; `treatments` with `symptoms`, `cost`, `next_due_at`; `milk_records` per cow + session (morning/evening); `calvings`; `activity_log`
+- [ ] RLS per role (owner / manager / worker) — see permissions table in blueprint
+- [ ] Phone number + PIN login (Supabase Auth), invite-only — disable public sign-up
+- [ ] Owner invites manager/workers by phone number
+- [ ] Connect Supabase + deploy to Vercel; seed the pilot farm's animals and staff
+
+## M10 — Worker & Manager Recording (Weeks 2–3)
+- [ ] Worker "Today's jobs" list with one-tap Done
+- [ ] Recurring daily tasks (milking, feeding, watering) auto-generated each day
+- [ ] Milk entry by session and cow; sickness report; treatment form
+- [ ] Every entry saved with who recorded it and when (feeds the activity log)
+
+## M11 — Owner Visibility (Weeks 3–4)
+- [ ] Dashboard on live data (animals, today's milk, under treatment, tasks done/pending/overdue)
+- [ ] Activity timeline — "replay the farm's day"
+- [ ] Cow profile: treatment history, calving info, milk trend
+- [ ] Milk daily/weekly/monthly totals + trends
+
+## M12 — Alerts & Reminders (Week 4)
+- [ ] Treatment / next dose due
+- [ ] Task overdue
+- [ ] Milking not recorded by a set time
+- [ ] Milk drop beyond threshold (per cow and herd, e.g. >20% vs 7-day average)
+
+## M13 — Workers & Reports (Week 5)
+- [ ] Worker profiles: assigned/completed tasks, activity history
+- [ ] Reports: animal health, milk production, treatment/medicine costs, tasks, worker activity
+
+## M14 — Farm Pilot (Weeks 6–9)
+- [ ] Install as PWA on farm phones; train owner, manager, workers
+- [ ] 2–4 weeks real use; collect feedback; fix issues
+- [ ] Decide go/no-go for opening to more farms
+
+## M15 — Open to More Farms (after pilot)
+- [ ] Self-service farm sign-up + herd-size pricing tiers
+- [ ] Offline-first recording with sync (move into pilot if farm connectivity is poor)
+- [ ] Vet access, cooperative dashboard, SMS/WhatsApp alerts — prioritised by pilot feedback
+
 ## Phase 2 (post-prototype, informs quotation — not in this build)
 - [ ] Paid training-content section for farmers
 - [ ] Native mobile app derived from the web app (inherits all web features)
-- [ ] Additional roles (e.g. farm worker, vet) if requested
+- [ ] Additional roles (e.g. vet, cooperative) — farm worker moved into pilot scope (M9)
 - [ ] Advanced analytics (breeding cycles, cost tracking, feed management)
